@@ -13,4 +13,8 @@
         <item name="android:textColor">@color/colorEditText</item>
     </style>
 
+    <style name="PlainText" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/colorPlainText</item>
+    </style>
+
 </resources>
