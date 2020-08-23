@@ -1,5 +1,7 @@
 package io.github.masterj3y.mymovie.core.platform
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import retrofit2.Response
 
 abstract class NetworkClient<T> {
@@ -19,6 +21,14 @@ abstract class NetworkClient<T> {
             e.message?.let { onError(it) }
         }
     }
+
+    suspend fun asLiveData(onSuccess: () -> Unit, onError: (String) -> Unit): LiveData<T> =
+        MutableLiveData<T>().apply {
+            fetch({
+                onSuccess()
+                postValue(it)
+            }, onError)
+        }
 
     abstract suspend fun fetchFromNetwork(): Response<T>
 }
