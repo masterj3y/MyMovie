@@ -8,6 +8,10 @@
         <item name="android:fontFamily">@font/font_montserrat_regular</item>
     </style>
 
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
+
     <style name="TextInput" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/edit_text_background</item>
         <item name="android:textColorHint">@color/colorTextHint</item>
