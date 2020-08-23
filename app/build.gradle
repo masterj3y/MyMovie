@@ -62,6 +62,12 @@ android {
         exclude 'META-INF/ASL2.0'
         exclude("META-INF/*.kotlin_module")
     }
+
+    allprojects {
+        repositories {
+            maven { url 'https://jitpack.io' }
+        }
+    }
 }
 
 dependencies {
@@ -73,6 +79,12 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.google.android.material:material:1.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    def fragNavController = '3.2.0'
+    implementation "com.ncapdevi:frag-nav:$fragNavController"
+
+    def smoothBottomBar = '1.7.6'
+    implementation "com.github.ibrahimsn98:SmoothBottomBar:$smoothBottomBar"
 
     def lifeCycle = '2.2.0'
     implementation "androidx.lifecycle:lifecycle-runtime:$lifeCycle"
