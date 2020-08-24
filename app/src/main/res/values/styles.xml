@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -6,6 +6,16 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">@font/font_montserrat_regular</item>
+    </style>
+
+    <style name="ExpandedTitleText" parent="AppTheme">
+        <item name="android:textColor">@android:color/transparent</item>
+    </style>
+
+    <style name="CollapsedTitleText" parent="TextTitle" />
+
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
     </style>
 
     <style name="TextInput" parent="Widget.AppCompat.EditText">
@@ -16,6 +26,21 @@
 
     <style name="PlainText" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/colorPlainText</item>
+    </style>
+
+    <style name="TextTitle" parent="PlainText">
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6
+        </item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorTextTitle</item>
+    </style>
+
+    <style name="TextDescription" parent="PlainText">
+        <item name="android:textAppearance" tools:ignore="DuplicateDefinition">
+            @style/TextAppearance.MaterialComponents.Body2
+        </item>
+        <item name="android:textStyle">italic</item>
     </style>
 
 </resources>

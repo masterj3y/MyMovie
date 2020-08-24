@@ -6,5 +6,6 @@
     <color name="colorTextHint">#7E7E7E</color>
     <color name="colorEditText">#CFCFCF</color>
     <color name="colorPlainText">#CFCFCF</color>
+    <color name="colorTextTitle">#EFEFEF</color>
     <color name="colorIconLight">#EFEFEF</color>
 </resources>

@@ -7,6 +7,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.masterj3y.mymovie.R
 import io.github.masterj3y.mymovie.core.platform.BaseFragment
 import io.github.masterj3y.mymovie.databinding.FragmentSearchMovieBinding
+import io.github.masterj3y.mymovie.movie.details.MovieDetailsActivity
+import io.github.masterj3y.mymovie.movie.details.MovieDetailsParam
 
 @AndroidEntryPoint
 class SearchMovieFragment :
@@ -20,7 +22,10 @@ class SearchMovieFragment :
         binding.apply {
             lifecycleOwner = this@SearchMovieFragment
             viewModel = this@SearchMovieFragment.viewModel
-            adapter = SearchMovieAdapter()
+            adapter = SearchMovieAdapter(::onMovieItemClicked)
         }
     }
+
+    private fun onMovieItemClicked(movieItem: SearchMovieItem, position: Int) =
+        MovieDetailsActivity.start(requireContext(), MovieDetailsParam.from(movieItem))
 }

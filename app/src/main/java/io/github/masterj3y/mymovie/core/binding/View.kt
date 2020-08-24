@@ -6,8 +6,10 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import io.github.masterj3y.mymovie.core.extension.loadFromUrl
 
-@BindingAdapter("loadImageFromUrl")
-fun loadImageFromUrl(view: ImageView, url: String) = view.loadFromUrl(url)
+@BindingAdapter("android:loadImageFromUrl")
+fun loadImageFromUrl(view: ImageView, url: String?) {
+    url?.let { view.loadFromUrl(it) }
+}
 
 @BindingAdapter("android:gone")
 fun gone(view: View, gone: Boolean) {

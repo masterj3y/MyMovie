@@ -9,7 +9,9 @@ import io.github.masterj3y.mymovie.core.extension.inflate
 import io.github.masterj3y.mymovie.core.platform.DiffCallBack
 import io.github.masterj3y.mymovie.databinding.ListSearchMovieItemBinding
 
-class SearchMovieAdapter : RecyclerView.Adapter<SearchMovieAdapter.SearchMovieViewHolder>() {
+class SearchMovieAdapter(
+    private val onItemClicked: (item: SearchMovieItem, position: Int) -> Unit
+) : RecyclerView.Adapter<SearchMovieAdapter.SearchMovieViewHolder>() {
 
     private val listDiffer = AsyncListDiffer<SearchMovieItem>(this, DiffCallBack<SearchMovieItem>())
 
@@ -25,8 +27,17 @@ class SearchMovieAdapter : RecyclerView.Adapter<SearchMovieAdapter.SearchMovieVi
 
     fun submitList(list: List<SearchMovieItem>) = listDiffer.submitList(list)
 
-    class SearchMovieViewHolder(private val binding: ListSearchMovieItemBinding) :
+    inner class SearchMovieViewHolder(private val binding: ListSearchMovieItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                onItemClicked(
+                    listDiffer.currentList[adapterPosition],
+                    adapterPosition
+                )
+            }
+        }
 
         fun render(item: SearchMovieItem) = with(binding) {
             movie = item
