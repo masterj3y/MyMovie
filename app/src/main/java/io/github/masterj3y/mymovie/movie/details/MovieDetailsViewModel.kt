@@ -13,13 +13,20 @@ class MovieDetailsViewModel @ViewModelInject constructor(repository: MovieReposi
     private val fetchMovieDetails = MutableLiveData<String>()
     val movieDetails: LiveData<MovieDetails>
 
+    val loading = MutableLiveData<Boolean>(false)
+
     init {
         movieDetails = fetchMovieDetails.switchMap {
-            launchOnViewModelScope { repository.getMovieDetails(it, {}, {}) }
+            launchOnViewModelScope {
+                loading()
+                repository.getMovieDetails(it, { loading(false) }, { loading(false) })
+            }
         }
     }
 
     fun fetchMovieDetails(movieId: String) {
         fetchMovieDetails.value = movieId
     }
+
+    private fun loading(visible: Boolean = true) = loading.postValue(visible)
 }

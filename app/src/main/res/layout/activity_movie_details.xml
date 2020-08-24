@@ -8,6 +8,10 @@
         <import type="android.view.View" />
 
         <variable
+            name="param"
+            type="io.github.masterj3y.mymovie.movie.details.MovieDetailsParam" />
+
+        <variable
             name="viewModel"
             type="io.github.masterj3y.mymovie.movie.details.MovieDetailsViewModel" />
     </data>
@@ -20,6 +24,7 @@
         android:fitsSystemWindows="false">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="4dp">
@@ -28,10 +33,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/colorPrimaryDark"
+                app:collapsedTitleTextAppearance="@style/CollapsedTitleText"
                 app:contentScrim="@color/colorPrimary"
-                app:expandedTitleGravity="top|left"
-                app:expandedTitleTextAppearance="@style/CollapsedExpandedTitleText"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                app:expandedTitleTextAppearance="@style/ExpandedTitleText"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:title="@{param.title}">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -42,7 +48,7 @@
                         android:id="@+id/movieDetailsPoster"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:loadImageFromUrl="@{viewModel.movieDetails.poster}"
+                        android:loadImageFromUrl="@{param.poster}"
                         android:scaleType="centerCrop"
                         app:layout_constraintDimensionRatio="1:1.2"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -71,18 +77,21 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/movieDetailsTitle"
                     style="@style/TextTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.movieDetails.title}"
+                    android:text="@{param.title}"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Zootopia" />
+                    tools:text="Zootopia"
+                    tools:visibility="visible" />
 
                 <!--                <ImageView-->
                 <!--                    android:id="@+id/movieDetailsMark"-->
@@ -111,11 +120,10 @@
                     style="@style/TextDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:text="@{viewModel.movieDetails.description}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/movieDetailsTitle"
+                    app:layout_constraintTop_toBottomOf="@id/movieDetailsTitle"
                     tools:text="Zootopia" />
 
                 <!--                <androidx.appcompat.widget.AppCompatTextView-->
@@ -133,14 +141,14 @@
                 <!--                    app:layout_constraintTop_toBottomOf="@+id/movieDetailsTitle"-->
                 <!--                    tools:text="error" />-->
 
-                <!--                <ProgressBar-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="match_parent"-->
-                <!--                    app:gone="@{!viewModel.viewState.loading}"-->
-                <!--                    app:layout_constraintBottom_toBottomOf="@id/movieDetailsDescription"-->
-                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                    app:layout_constraintStart_toStartOf="parent"-->
-                <!--                    app:layout_constraintTop_toTopOf="@id/movieDetailsDescription" />-->
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gone="@{!viewModel.loading}"
+                    app:layout_constraintBottom_toBottomOf="@id/movieDetailsDescription"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/movieDetailsDescription" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

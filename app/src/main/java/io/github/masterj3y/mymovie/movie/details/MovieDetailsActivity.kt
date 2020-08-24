@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.masterj3y.mymovie.R
+import io.github.masterj3y.mymovie.core.extension.*
 import io.github.masterj3y.mymovie.core.platform.BaseActivity
 import io.github.masterj3y.mymovie.databinding.ActivityMovieDetailsBinding
 
@@ -26,9 +27,20 @@ class MovieDetailsActivity : BaseActivity<ActivityMovieDetailsBinding>() {
         binding.apply {
             lifecycleOwner = this@MovieDetailsActivity
             viewModel = this@MovieDetailsActivity.viewModel
+            param = this@MovieDetailsActivity.param
+
+            appBarLayout.onCollapsingListener(::onCollapsingLayoutListener)
         }
 
         param?.let { viewModel.fetchMovieDetails(it.id) }
+    }
+
+    private fun onCollapsingLayoutListener(state: State) = with(binding.movieDetailsTitle) {
+        println(state.toString())
+        when (state) {
+            State.COLLAPSED -> if (isVisible()) gone()
+            State.EXPANDED -> if (!isVisible()) visible()
+        }
     }
 
     companion object {
