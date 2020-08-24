@@ -36,7 +36,6 @@ class MovieDetailsActivity : BaseActivity<ActivityMovieDetailsBinding>() {
     }
 
     private fun onCollapsingLayoutListener(state: State) = with(binding.movieDetailsTitle) {
-        println(state.toString())
         when (state) {
             State.COLLAPSED -> if (isVisible()) gone()
             State.EXPANDED -> if (!isVisible()) visible()
