@@ -41,4 +41,24 @@ class MovieServiceTest : TestService<MovieService>() {
             "https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg"
         )
     }
+
+    @Test
+    @Throws(IOException::class)
+    fun fetchMovieDetailsFromNetwork() = runBlocking {
+        enqueueResponse("details/response.json")
+        val response = requireNotNull(service.movieDetails("tt0109830"))
+        val body = requireNotNull(response.body())
+        mockWebServer.takeRequest()
+        val actual = body
+        assertEquals(actual.movieId, "tt0109830")
+        assertEquals(actual.title, "Forrest Gump")
+        assertEquals(
+            actual.description,
+            "The presidencies of Kennedy and Johnson, the events of Vietnam, Watergate and other historical events unfold through the perspective of an Alabama man with an IQ of 75, whose only desire is to be reunited with his childhood sweetheart."
+        )
+        assertEquals(
+            actual.poster,
+            "https://m.media-amazon.com/images/M/MV5BNWIwODRlZTUtY2U3ZS00Yzg1LWJhNzYtMmZiYmEyNmU1NjMzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"
+        )
+    }
 }
