@@ -20,5 +20,5 @@ data class MovieDetails(
     var poster: String = "",
     @field:Json(name = "Plot")
     var description: String = "",
-    var isFavorite: Boolean = false
+    var inWatchlist: Boolean = false
 ) : Parcelable
