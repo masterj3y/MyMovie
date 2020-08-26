@@ -1,13 +1,16 @@
 package io.github.masterj3y.mymovie.movie.details
 
+import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
 import io.github.masterj3y.mymovie.core.platform.BaseViewModel
 import io.github.masterj3y.mymovie.movie.MovieRepository
+import kotlinx.coroutines.launch
 
-class MovieDetailsViewModel @ViewModelInject constructor(repository: MovieRepository) :
+class MovieDetailsViewModel @ViewModelInject constructor(private val repository: MovieRepository) :
     BaseViewModel() {
 
     private val fetchMovieDetails = MutableLiveData<String>()
@@ -26,6 +29,14 @@ class MovieDetailsViewModel @ViewModelInject constructor(repository: MovieReposi
 
     fun fetchMovieDetails(movieId: String) {
         fetchMovieDetails.value = movieId
+    }
+
+    fun addToWatchlist(view: View?) = viewModelScope.launch {
+        movieDetails.value?.movieId?.let { repository.addToWatchlist(it) }
+    }
+
+    fun removeFromWatchlist(view: View?) = viewModelScope.launch {
+        movieDetails.value?.movieId?.let { repository.removeFromWatchlist(it) }
     }
 
     private fun loading(visible: Boolean = true) = loading.postValue(visible)

@@ -43,4 +43,12 @@ class MovieRepository @Inject constructor(
             }, onError)
             dao.findMovieById(movieId)
         }
+
+    suspend fun addToWatchlist(movieId: String) = withContext(IO) {
+        dao.addToWatchList(movieId)
+    }
+
+    suspend fun removeFromWatchlist(movieId: String) = withContext(IO) {
+        dao.removeFromWatchlist(movieId)
+    }
 }
