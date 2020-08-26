@@ -7,6 +7,7 @@ import com.nhaarman.mockitokotlin2.verify
 import io.github.masterj3y.mymovie.movie.MovieDao
 import io.github.masterj3y.mymovie.movie.details.MovieDetails
 import io.github.masterj3y.utils.MockUtils.mockedMovieDetails
+import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
@@ -42,5 +43,35 @@ class MovieDaoTest : TestDatabase() {
 
         verify(observer).onChanged(mockedData)
         loadData.removeObserver(observer)
+    }
+
+    @Test
+    fun addMovieToWatchList() {
+        val observer: Observer<MovieDetails> = mock()
+        val mockedMovieDetails = mockedMovieDetails()
+        mockedMovieDetails.inWatchlist = false
+        dao.insertMovie(mockedMovieDetails)
+        dao.addToWatchList(mockedMovieDetails.movieId)
+
+        val updatedData = dao.findMovieById(mockedMovieDetails.movieId)
+        updatedData.observeForever(observer)
+        assertEquals(updatedData.value?.inWatchlist, true)
+
+        updatedData.removeObserver(observer)
+    }
+
+    @Test
+    fun removeMovieFromWatchList() {
+        val observer: Observer<MovieDetails> = mock()
+        val mockedMovieDetails = mockedMovieDetails()
+        mockedMovieDetails.inWatchlist = true
+        dao.insertMovie(mockedMovieDetails)
+        dao.removeFromWatchlist(mockedMovieDetails.movieId)
+
+        val updatedData = dao.findMovieById(mockedMovieDetails.movieId)
+        updatedData.observeForever(observer)
+        assertEquals(updatedData.value?.inWatchlist, false)
+
+        updatedData.removeObserver(observer)
     }
 }
