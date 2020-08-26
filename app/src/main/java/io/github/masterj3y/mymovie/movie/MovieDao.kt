@@ -15,4 +15,10 @@ interface MovieDao {
 
     @Query("SELECT * FROM movies WHERE movieId = :movieId")
     fun findMovieById(movieId: String): LiveData<MovieDetails>
+
+    @Query("UPDATE movies SET inWatchlist = 1 WHERE movieId = :movieId")
+    fun addToWatchList(movieId: String)
+
+    @Query("UPDATE movies SET inWatchlist = 0 WHERE movieId = :movieId")
+    fun removeFromWatchlist(movieId: String)
 }
