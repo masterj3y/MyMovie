@@ -14,7 +14,7 @@ class MovieDetailsViewModel @ViewModelInject constructor(private val repository:
     BaseViewModel() {
 
     private val fetchMovieDetails = MutableLiveData<String>()
-    val movieDetails: LiveData<MovieDetails>
+    val movieDetails: LiveData<MovieDetails?>
 
     val loading = MutableLiveData<Boolean>(false)
 

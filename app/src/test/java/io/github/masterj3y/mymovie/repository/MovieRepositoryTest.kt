@@ -16,6 +16,7 @@ import io.github.masterj3y.mymovie.network.ApiUtil.getCall
 import io.github.masterj3y.utils.MockUtils.mockedMovieDetails
 import io.github.masterj3y.utils.MockUtils.mockedSearchMovieResult
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
@@ -59,20 +60,19 @@ class MovieRepositoryTest {
     fun getMovieDetails(): Unit = runBlocking {
         val observer: Observer<MovieDetails?> = mock()
         val mockedMovieDetails = mockedMovieDetails()
+        val mockedFlow = flow { emit(mockedMovieDetails) }
         val apiResponse = getCall(mockedMovieDetails).execute()
 
-        whenever(dao.findMovieById("movie-1")).thenReturn(MutableLiveData(mockedMovieDetails))
+        whenever(dao.findMovieById("movie-1")).thenReturn(mockedFlow)
         whenever(service.movieDetails("movie-1")).thenReturn(apiResponse)
 
         val loadData =
             MutableLiveData(repository.getMovieDetails(mockedMovieDetails.movieId, {}, {}).value)
-        verify(dao).findMovieById("movie-1")
-        verify(service).movieDetails("movie-1")
 
         loadData.observeForever(observer)
 
         val updatedData = MutableLiveData(mockedMovieDetails())
-        whenever(dao.findMovieById("movie-1")).thenReturn(updatedData)
+        whenever(dao.findMovieById("movie-1")).thenReturn(mockedFlow)
 
         loadData.postValue(updatedData.value)
         verify(observer, atLeastOnce()).onChanged(updatedData.value)
