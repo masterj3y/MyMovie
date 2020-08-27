@@ -93,28 +93,6 @@
                     tools:text="Zootopia"
                     tools:visibility="visible" />
 
-                <!--                <ImageView-->
-                <!--                    android:id="@+id/movieDetailsMark"-->
-                <!--                    invisible="@{viewModel.viewState.data.favorite}"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:onClick="@{(view) -> viewModel.markMovieClicked(view)}"-->
-                <!--                    android:padding="8dp"-->
-                <!--                    android:src="@drawable/ic_baseline_star_border_24"-->
-                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                    app:layout_constraintTop_toTopOf="parent" />-->
-
-                <!--                <ImageView-->
-                <!--                    android:id="@+id/movieDetailsUnMark"-->
-                <!--                    invisible="@{!viewModel.viewState.data.favorite}"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:onClick="@{(view) -> viewModel.unMarkMovieClicked(view)}"-->
-                <!--                    android:padding="8dp"-->
-                <!--                    android:src="@drawable/ic_baseline_star_24"-->
-                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                    app:layout_constraintTop_toTopOf="parent" />-->
-
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/movieDetailsDescription"
                     style="@style/TextDescription"
@@ -153,6 +131,32 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:invisible="@{viewModel.movieDetails.inWatchlist}"
+            android:onClick="@{(view) -> viewModel.addToWatchlist(view, param.id)}"
+            android:src="@drawable/ic_baseline_bookmark_border_24"
+            android:visibility="invisible"
+            app:layout_anchor="@id/appBarLayout"
+            app:layout_anchorGravity="bottom|end" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:invisible="@{!viewModel.movieDetails.inWatchlist}"
+            android:onClick="@{(view) -> viewModel.removeFromWatchlist(view, param.id)}"
+            android:src="@drawable/ic_baseline_bookmark_24"
+            android:visibility="invisible"
+            app:layout_anchor="@id/appBarLayout"
+            app:layout_anchorGravity="bottom|end" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

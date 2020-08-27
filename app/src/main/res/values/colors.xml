@@ -8,4 +8,5 @@
     <color name="colorPlainText">#CFCFCF</color>
     <color name="colorTextTitle">#EFEFEF</color>
     <color name="colorIconLight">#EFEFEF</color>
+    <color name="colorIconDark">#121212</color>
 </resources>

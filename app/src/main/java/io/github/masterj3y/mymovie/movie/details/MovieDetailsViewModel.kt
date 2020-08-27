@@ -31,12 +31,12 @@ class MovieDetailsViewModel @ViewModelInject constructor(private val repository:
         fetchMovieDetails.value = movieId
     }
 
-    fun addToWatchlist(view: View?) = viewModelScope.launch {
-        movieDetails.value?.movieId?.let { repository.addToWatchlist(it) }
+    fun addToWatchlist(view: View?, movieId: String) = viewModelScope.launch {
+        repository.addToWatchlist(movieId)
     }
 
-    fun removeFromWatchlist(view: View?) = viewModelScope.launch {
-        movieDetails.value?.movieId?.let { repository.removeFromWatchlist(it) }
+    fun removeFromWatchlist(view: View?, movieId: String) = viewModelScope.launch {
+        repository.removeFromWatchlist(movieId)
     }
 
     private fun loading(visible: Boolean = true) = loading.postValue(visible)
