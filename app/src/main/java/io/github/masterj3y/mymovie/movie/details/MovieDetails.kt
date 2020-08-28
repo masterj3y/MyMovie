@@ -4,11 +4,13 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import io.github.masterj3y.mymovie.core.platform.BaseEntity
 
 @JsonClass(generateAdapter = true)
 @Entity(tableName = "movies")
 data class MovieDetails(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    override var id: Int = 0,
     @field:Json(name = "imdbID")
     val movieId: String,
     @field:Json(name = "Title")
@@ -18,4 +20,4 @@ data class MovieDetails(
     @field:Json(name = "Plot")
     val description: String,
     var inWatchlist: Boolean = false
-)
+) : BaseEntity<Int>
