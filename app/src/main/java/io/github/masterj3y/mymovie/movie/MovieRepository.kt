@@ -56,4 +56,9 @@ class MovieRepository @Inject constructor(
     suspend fun removeFromWatchlist(movieId: String) = withContext(IO) {
         dao.removeFromWatchlist(movieId)
     }
+
+    @ExperimentalCoroutinesApi
+    suspend fun getWatchlist(): LiveData<List<MovieDetails>> = withContext(IO) {
+        dao.findWatchlist()
+    }.asLiveData()
 }

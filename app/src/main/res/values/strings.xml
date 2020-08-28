@@ -3,4 +3,5 @@
     <string name="search_movie_input_hint">Movie Title</string>
     <string name="search_movie_nothing_to_show">Nothing to Show</string>
     <string name="tab_search">Search</string>
+    <string name="tab_watchlist">Watchlist</string>
 </resources>

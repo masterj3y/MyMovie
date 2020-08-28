@@ -27,7 +27,7 @@
             android:layout_height="70dp"
             app:backgroundColor="@color/colorPrimary"
             app:iconSize="24dp"
-            app:iconTint="@color/colorPrimaryDark"
+            app:iconTint="@color/colorIconLight"
             app:iconTintActive="@color/colorPrimary"
             app:indicatorColor="@color/colorAccent"
             app:indicatorRadius="10dp"

@@ -64,4 +64,17 @@ class MovieDaoTest : TestDatabase() {
         val updatedData = dao.findMovieById(mockedMovieDetails.movieId)
         assertEquals(false, updatedData.first()?.inWatchlist)
     }
+
+    @Test
+    fun getWatchlist() = runBlocking {
+        val mockedWatchlist = listOf(
+            mockedMovieDetails().copy(inWatchlist = true),
+            mockedMovieDetails().copy(inWatchlist = false)
+        )
+        dao.insertMovie(*mockedWatchlist.toTypedArray())
+        val actualWatchlist = dao.findWatchlist().toList()
+        val expectedWatchlist = listOf(mockedMovieDetails().copy(inWatchlist = true))
+
+        assertEquals(actualWatchlist, expectedWatchlist)
+    }
 }
