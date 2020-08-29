@@ -47,15 +47,16 @@
             android:gone="@{viewModel.watchList.size!=0}"
             android:gravity="center"
             android:text="@string/watchlist_is_empty"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            tools:visibility="invisible"
             android:adapter="@{adapter}"
             android:bindWatchlistItems="@{viewModel.watchList}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -63,6 +64,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appBarLayout"
-            tools:listitem="@layout/list_watchlist_item" />
+            tools:listitem="@layout/list_watchlist_item"
+            tools:visibility="invisible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
