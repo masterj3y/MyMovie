@@ -11,7 +11,7 @@ import io.github.masterj3y.mymovie.databinding.ListWatchlistItemBinding
 import io.github.masterj3y.mymovie.movie.details.MovieDetails
 
 class WatchlistAdapter(
-    private val onItemClicked: (item: MovieDetails, position: Int) -> Unit
+    private val listener: OnItemClickListener
 ) : RecyclerView.Adapter<WatchlistAdapter.WatchlistViewHolder>() {
 
     private val listDiffer = AsyncListDiffer<MovieDetails>(this, DiffCallBack<MovieDetails>())
@@ -30,14 +30,28 @@ class WatchlistAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.root.setOnClickListener {
-                onItemClicked(listDiffer.currentList[adapterPosition], adapterPosition)
+            binding.apply {
+                root.setOnClickListener {
+                    listener.onItemClicked(listDiffer.currentList[adapterPosition], adapterPosition)
+                }
+                delete.setOnClickListener {
+                    listener.onDeleteClicked(
+                        listDiffer.currentList[adapterPosition],
+                        adapterPosition
+                    )
+                }
             }
         }
 
         fun render(item: MovieDetails) = with(binding) {
             movie = item
         }
+    }
+
+    interface OnItemClickListener {
+
+        fun onItemClicked(movieDetails: MovieDetails, position: Int)
+        fun onDeleteClicked(movieDetails: MovieDetails, position: Int)
     }
 }
 

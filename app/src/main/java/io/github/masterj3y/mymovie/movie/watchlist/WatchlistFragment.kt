@@ -13,7 +13,8 @@ import io.github.masterj3y.mymovie.movie.details.MovieDetailsParam
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
-class WatchlistFragment : BaseFragment<FragmentWatchlistBinding>(R.layout.fragment_watchlist) {
+class WatchlistFragment : BaseFragment<FragmentWatchlistBinding>(R.layout.fragment_watchlist),
+    WatchlistAdapter.OnItemClickListener {
 
     private val viewModel: WatchlistViewModel by viewModels()
 
@@ -24,11 +25,13 @@ class WatchlistFragment : BaseFragment<FragmentWatchlistBinding>(R.layout.fragme
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@WatchlistFragment.viewModel
-            adapter = WatchlistAdapter(::onMovieItemClicked)
+            adapter = WatchlistAdapter(this@WatchlistFragment)
         }
     }
 
+    override fun onItemClicked(movieDetails: MovieDetails, position: Int) =
+        MovieDetailsActivity.start(requireContext(), MovieDetailsParam.from(movieDetails))
 
-    private fun onMovieItemClicked(movieItem: MovieDetails, position: Int) =
-        MovieDetailsActivity.start(requireContext(), MovieDetailsParam.from(movieItem))
+    override fun onDeleteClicked(movieDetails: MovieDetails, position: Int) =
+        viewModel.removeFromWatchlist(movieDetails.movieId)
 }
