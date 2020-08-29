@@ -48,7 +48,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Title" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextDescription"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
