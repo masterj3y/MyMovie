@@ -106,6 +106,8 @@ dependencies {
 
     def glide = '4.11.0'
     implementation "com.github.bumptech.glide:glide:$glide"
+    def glide_palette = '2.1.2'
+    implementation "com.github.florent37:glidepalette:$glide_palette"
 
     def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"
