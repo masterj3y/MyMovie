@@ -11,7 +11,7 @@ object MockUtils {
         title = "movie",
         description = "description",
         poster = "poster",
-        isFavorite = true
+        inWatchlist = true
     )
 
     fun mockedMovieSearchItem() = SearchMovieItem(
