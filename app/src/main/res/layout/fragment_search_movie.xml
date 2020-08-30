@@ -74,7 +74,7 @@
             android:layout_margin="16dp"
             android:drawableTop="@drawable/ic_videographer"
             android:drawablePadding="16dp"
-            android:gone="@{viewModel.loading || viewModel.searchMovieResult.result.size()>1}"
+            android:gone="@{viewModel.loading || viewModel.searchMovieResult.result.size()>0}"
             android:gravity="center"
             android:text="@string/search_movie_nothing_to_show"
             app:layout_constraintBottom_toBottomOf="parent"
