@@ -11,7 +11,6 @@
     </data>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -31,7 +30,6 @@
                 android:id="@+id/poster"
                 android:layout_width="100dp"
                 android:layout_height="150dp"
-                android:loadBackgroundPalette="@{cardView}"
                 android:loadImageFromUrl="@{movie.poster}"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
