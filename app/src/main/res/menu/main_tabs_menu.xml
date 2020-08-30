@@ -5,4 +5,9 @@
         android:id="@+id/search_tab"
         android:icon="@drawable/ic_search"
         android:title="@string/tab_search" />
+
+    <item
+        android:id="@+id/watchlist_tab"
+        android:icon="@drawable/ic_list_ul"
+        android:title="@string/tab_watchlist" />
 </menu>

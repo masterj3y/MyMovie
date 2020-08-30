@@ -10,6 +10,7 @@ import io.github.masterj3y.mymovie.core.platform.BaseActivity
 import io.github.masterj3y.mymovie.core.platform.BaseFragment
 import io.github.masterj3y.mymovie.databinding.ActivityMainBinding
 import io.github.masterj3y.mymovie.movie.search.SearchMovieFragment
+import io.github.masterj3y.mymovie.movie.watchlist.WatchlistFragment
 import me.ibrahimsn.lib.OnItemReselectedListener
 
 @AndroidEntryPoint
@@ -31,7 +32,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), BaseFragment.FragmentN
         fragNavController.apply {
             createEager = false
             fragmentHideStrategy = FragNavController.HIDE
-            rootFragments = listOf(SearchMovieFragment())
+            rootFragments = listOf(SearchMovieFragment(), WatchlistFragment())
             navigationStrategy = UniqueTabHistoryStrategy(object : FragNavSwitchController {
                 override fun switchTab(index: Int, transactionOptions: FragNavTransactionOptions?) {
                     selectTab(index)
@@ -46,6 +47,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), BaseFragment.FragmentN
         binding.mainBottomBar.onItemSelected = {
             when (it) {
                 0 -> fragNavController.switchTab(SEARCH_TAB)
+                1 -> fragNavController.switchTab(WATCHLIST_TAB)
             }
         }
         binding.mainBottomBar.onItemReselectedListener = object : OnItemReselectedListener {
@@ -70,5 +72,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), BaseFragment.FragmentN
     companion object {
 
         private const val SEARCH_TAB = FragNavController.TAB1
+        private const val WATCHLIST_TAB = FragNavController.TAB2
     }
 }

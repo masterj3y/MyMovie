@@ -16,6 +16,11 @@ fun gone(view: View, gone: Boolean) {
     view.visibility = if (gone) View.GONE else View.VISIBLE
 }
 
+@BindingAdapter("android:invisible")
+fun invisible(view: View, invisible: Boolean) {
+    view.visibility = if (invisible) View.INVISIBLE else View.VISIBLE
+}
+
 @BindingAdapter("android:adapter")
 fun bindAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<*>) {
     view.adapter = adapter

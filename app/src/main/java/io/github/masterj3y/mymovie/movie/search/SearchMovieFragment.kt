@@ -20,7 +20,7 @@ class SearchMovieFragment :
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            lifecycleOwner = this@SearchMovieFragment
+            lifecycleOwner = viewLifecycleOwner
             viewModel = this@SearchMovieFragment.viewModel
             adapter = SearchMovieAdapter(::onMovieItemClicked)
         }
