@@ -9,4 +9,6 @@
     <color name="colorTextTitle">#EFEFEF</color>
     <color name="colorIconLight">#EFEFEF</color>
     <color name="colorIconDark">#121212</color>
+    <color name="colorBottomSheetDialogDark">#292929</color>
+    <color name="colorBottomSheetDialogItemDark">#292929</color>
 </resources>
