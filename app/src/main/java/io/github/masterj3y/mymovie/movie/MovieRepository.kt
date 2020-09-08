@@ -1,7 +1,5 @@
 package io.github.masterj3y.mymovie.movie
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
 import io.github.masterj3y.mymovie.core.platform.CacheNetworkBoundRepository
 import io.github.masterj3y.mymovie.core.platform.NetworkBoundRepository
 import io.github.masterj3y.mymovie.movie.details.MovieDetails
@@ -9,34 +7,35 @@ import io.github.masterj3y.mymovie.movie.search.SearchMovieResponse
 import io.github.masterj3y.mymovie.movie.watchlist.WatchlistStatusLabel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
+@InternalCoroutinesApi
 class MovieRepository @Inject constructor(
     private val service: MovieService,
     private val dao: MovieDao
 ) {
 
-    @ExperimentalCoroutinesApi
     suspend fun search(
         title: String,
         onSuccess: () -> Unit,
         onError: (String) -> Unit
-    ): LiveData<SearchMovieResponse> =
+    ): Flow<SearchMovieResponse> =
         withContext(IO) {
             object : NetworkBoundRepository<SearchMovieResponse>(onSuccess, onError) {
                 override suspend fun fetchFromRemote() = service.search(title)
 
-            }.asFlow().asLiveData()
+            }.asFlow()
         }
 
-    @ExperimentalCoroutinesApi
     suspend fun getMovieDetails(
         movieId: String,
         onSuccess: () -> Unit,
         onError: (String) -> Unit
-    ): LiveData<MovieDetails?> =
+    ): Flow<MovieDetails?> =
         withContext(IO) {
             object : CacheNetworkBoundRepository<MovieDetails?, MovieDetails?>(onSuccess, onError) {
                 override suspend fun saveRemoteData(response: MovieDetails?) {
@@ -47,7 +46,7 @@ class MovieRepository @Inject constructor(
 
                 override suspend fun fetchFromRemote() = service.movieDetails(movieId)
 
-            }.asFlow().asLiveData()
+            }.asFlow()
         }
 
     suspend fun addToWatchlist(movieId: String) = withContext(IO) {
@@ -58,10 +57,9 @@ class MovieRepository @Inject constructor(
         dao.removeFromWatchlist(movieId)
     }
 
-    @ExperimentalCoroutinesApi
-    suspend fun getWatchlist(): LiveData<List<MovieDetails>> = withContext(IO) {
+    suspend fun getWatchlist(): Flow<List<MovieDetails>> = withContext(IO) {
         dao.findWatchlist()
-    }.asLiveData()
+    }
 
     suspend fun changeWatchStatus(movieId: String, status: WatchlistStatusLabel) = withContext(IO) {
         dao.changeMovieWatchStatus(movieId, status.toString())

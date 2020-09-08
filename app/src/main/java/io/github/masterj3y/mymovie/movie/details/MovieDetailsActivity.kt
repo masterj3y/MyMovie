@@ -9,8 +9,12 @@ import io.github.masterj3y.mymovie.R
 import io.github.masterj3y.mymovie.core.extension.*
 import io.github.masterj3y.mymovie.core.platform.BaseActivity
 import io.github.masterj3y.mymovie.databinding.ActivityMovieDetailsBinding
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 
 @AndroidEntryPoint
+@InternalCoroutinesApi
+@ExperimentalCoroutinesApi
 class MovieDetailsActivity : BaseActivity<ActivityMovieDetailsBinding>() {
 
     private val viewModel: MovieDetailsViewModel by viewModels()

@@ -6,7 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
 import io.github.masterj3y.mymovie.core.platform.BaseViewModel
 import io.github.masterj3y.mymovie.movie.MovieRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 
+@ExperimentalCoroutinesApi
+@InternalCoroutinesApi
 class SearchMovieViewModel @ViewModelInject constructor(private val repository: MovieRepository) :
     BaseViewModel() {
 

@@ -9,8 +9,12 @@ import io.github.masterj3y.mymovie.core.platform.BaseFragment
 import io.github.masterj3y.mymovie.databinding.FragmentSearchMovieBinding
 import io.github.masterj3y.mymovie.movie.details.MovieDetailsActivity
 import io.github.masterj3y.mymovie.movie.details.MovieDetailsParam
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 
 @AndroidEntryPoint
+@ExperimentalCoroutinesApi
+@InternalCoroutinesApi
 class SearchMovieFragment :
     BaseFragment<FragmentSearchMovieBinding>(R.layout.fragment_search_movie) {
 

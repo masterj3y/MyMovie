@@ -12,9 +12,13 @@ import io.github.masterj3y.mymovie.core.platform.BaseFragment
 import io.github.masterj3y.mymovie.databinding.ActivityMainBinding
 import io.github.masterj3y.mymovie.movie.search.SearchMovieFragment
 import io.github.masterj3y.mymovie.movie.watchlist.WatchlistFragment
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 import me.ibrahimsn.lib.OnItemReselectedListener
 
 @AndroidEntryPoint
+@InternalCoroutinesApi
+@ExperimentalCoroutinesApi
 class MainActivity : BaseActivity<ActivityMainBinding>(), BaseFragment.FragmentNavigationHost {
 
     private val fragNavController: FragNavController by lazy {

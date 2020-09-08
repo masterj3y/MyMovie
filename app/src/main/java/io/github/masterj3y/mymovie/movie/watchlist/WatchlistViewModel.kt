@@ -7,8 +7,11 @@ import io.github.masterj3y.mymovie.core.platform.BaseViewModel
 import io.github.masterj3y.mymovie.movie.MovieRepository
 import io.github.masterj3y.mymovie.movie.details.MovieDetails
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 
+@ExperimentalCoroutinesApi
+@InternalCoroutinesApi
 class WatchlistViewModel @ViewModelInject constructor(private val repository: MovieRepository) :
     BaseViewModel() {
 

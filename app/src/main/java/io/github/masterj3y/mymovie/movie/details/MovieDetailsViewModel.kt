@@ -8,8 +8,12 @@ import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import io.github.masterj3y.mymovie.core.platform.BaseViewModel
 import io.github.masterj3y.mymovie.movie.MovieRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 
+@InternalCoroutinesApi
+@ExperimentalCoroutinesApi
 class MovieDetailsViewModel @ViewModelInject constructor(private val repository: MovieRepository) :
     BaseViewModel() {
 

@@ -16,8 +16,11 @@ import io.github.masterj3y.mymovie.movie.details.MovieDetailsParam
 import io.github.masterj3y.mymovie.movie.watchlist.WatchlistStatusLabel.NOT_WATCHED
 import io.github.masterj3y.mymovie.movie.watchlist.WatchlistStatusLabel.WATCHED
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 
 @AndroidEntryPoint
+@InternalCoroutinesApi
+@ExperimentalCoroutinesApi
 class WatchlistFragment : BaseFragment<FragmentWatchlistBinding>(R.layout.fragment_watchlist),
     WatchlistAdapter.OnItemClickListener {
 
