@@ -5,4 +5,9 @@
     <string name="tab_search">Search</string>
     <string name="tab_watchlist">Watchlist</string>
     <string name="watchlist_is_empty">Watchlist is Empty</string>
+    <string name="movie_watched">Watched</string>
+    <string name="movie_not_watched">Not Watched</string>
+    <string name="watch_list_status_dialog_title">Status</string>
+    <string name="watch_list_delete_item">Delete</string>
+    <string name="watchlist_item_actions">Actions</string>
 </resources>

@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import io.github.masterj3y.mymovie.core.platform.BaseEntity
+import io.github.masterj3y.mymovie.movie.watchlist.WatchlistStatusLabel
 
 @JsonClass(generateAdapter = true)
 @Entity(tableName = "movies")
@@ -19,5 +20,6 @@ data class MovieDetails(
     val poster: String = "",
     @field:Json(name = "Plot")
     val description: String,
-    var inWatchlist: Boolean = false
+    var inWatchlist: Boolean = false,
+    var watchStatus: String = WatchlistStatusLabel.NOT_WATCHED.toString()
 ) : BaseEntity<Int>

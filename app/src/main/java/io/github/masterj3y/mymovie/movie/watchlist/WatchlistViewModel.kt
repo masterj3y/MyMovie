@@ -22,4 +22,10 @@ class WatchlistViewModel @ViewModelInject constructor(private val repository: Mo
             repository.removeFromWatchlist(movieId)
         }
     }
+
+    fun changeWatchStatus(movieId: String, status: WatchlistStatusLabel) {
+        viewModelScope.launch {
+            repository.changeWatchStatus(movieId, status)
+        }
+    }
 }
