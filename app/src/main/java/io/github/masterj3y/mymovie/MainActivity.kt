@@ -1,6 +1,7 @@
 package io.github.masterj3y.mymovie
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavSwitchController
 import com.ncapdevi.fragnav.FragNavTransactionOptions
@@ -20,6 +21,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), BaseFragment.FragmentN
         FragNavController(supportFragmentManager, R.id.fragmentContainer)
     }
 
+    private val fragments: List<Fragment> by lazy {
+        listOf(
+            SearchMovieFragment(),
+            WatchlistFragment()
+        )
+    }
+
     override fun layoutRes() = R.layout.activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,9 +38,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), BaseFragment.FragmentN
 
     private fun initFragNavController(savedInstanceState: Bundle?) {
         fragNavController.apply {
-            createEager = false
+            createEager = true
             fragmentHideStrategy = FragNavController.HIDE
-            rootFragments = listOf(SearchMovieFragment(), WatchlistFragment())
+            rootFragments = fragments
             navigationStrategy = UniqueTabHistoryStrategy(object : FragNavSwitchController {
                 override fun switchTab(index: Int, transactionOptions: FragNavTransactionOptions?) {
                     selectTab(index)

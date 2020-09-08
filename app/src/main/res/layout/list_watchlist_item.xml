@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="io.github.masterj3y.mymovie.movie.watchlist.WatchlistStatusLabel" />
+
         <variable
             name="movie"
             type="io.github.masterj3y.mymovie.movie.details.MovieDetails" />
@@ -49,14 +51,31 @@
                 tools:text="Title" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/delete"
+                android:id="@+id/more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:src="@drawable/ic_trash"
+                android:src="@drawable/ic_baseline_more_vert_24"
                 app:layout_constraintBottom_toBottomOf="@id/poster"
                 app:layout_constraintEnd_toEndOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gone="@{!movie.watchStatus.equals(WatchlistStatusLabel.WATCHED.toString())}"
+                android:src="@drawable/ic_check_circle"
+                app:layout_constraintBottom_toBottomOf="@id/more"
+                app:layout_constraintEnd_toStartOf="@id/more"
+                app:layout_constraintTop_toTopOf="@id/more" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gone="@{!movie.watchStatus.equals(WatchlistStatusLabel.NOT_WATCHED.toString())}"
+                android:src="@drawable/ic_times_circle"
+                app:layout_constraintBottom_toBottomOf="@id/more"
+                app:layout_constraintEnd_toStartOf="@id/more"
+                app:layout_constraintTop_toTopOf="@id/more" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

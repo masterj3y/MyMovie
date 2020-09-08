@@ -6,6 +6,7 @@ import io.github.masterj3y.mymovie.core.platform.CacheNetworkBoundRepository
 import io.github.masterj3y.mymovie.core.platform.NetworkBoundRepository
 import io.github.masterj3y.mymovie.movie.details.MovieDetails
 import io.github.masterj3y.mymovie.movie.search.SearchMovieResponse
+import io.github.masterj3y.mymovie.movie.watchlist.WatchlistStatusLabel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -61,4 +62,8 @@ class MovieRepository @Inject constructor(
     suspend fun getWatchlist(): LiveData<List<MovieDetails>> = withContext(IO) {
         dao.findWatchlist()
     }.asLiveData()
+
+    suspend fun changeWatchStatus(movieId: String, status: WatchlistStatusLabel) = withContext(IO) {
+        dao.changeMovieWatchStatus(movieId, status.toString())
+    }
 }
