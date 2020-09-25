@@ -3,6 +3,7 @@ package io.github.masterj3y.mymovie.database
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.github.masterj3y.mymovie.MainCoroutinesRule
 import io.github.masterj3y.mymovie.movie.MovieDao
+import io.github.masterj3y.mymovie.movie.watchlist.WatchlistStatusLabel.WATCHED
 import io.github.masterj3y.utils.MockUtils.mockedMovieDetails
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -72,7 +73,7 @@ class MovieDaoTest : TestDatabase() {
             mockedMovieDetails().copy(inWatchlist = false)
         )
         dao.insertMovie(*mockedWatchlist.toTypedArray())
-        val actualWatchlist = dao.findWatchlist().toList()
+        val actualWatchlist = dao.findWatchlist(WATCHED.toString()).toList()
         val expectedWatchlist = listOf(mockedMovieDetails().copy(inWatchlist = true))
 
         assertEquals(actualWatchlist, expectedWatchlist)

@@ -34,6 +34,8 @@ class WatchlistFragment : BaseFragment<FragmentWatchlistBinding>(R.layout.fragme
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@WatchlistFragment.viewModel
             adapter = WatchlistAdapter(this@WatchlistFragment)
+
+            sortAndFilter.setOnClickListener { showSortAndFilterDialog() }
         }
     }
 
@@ -59,6 +61,24 @@ class WatchlistFragment : BaseFragment<FragmentWatchlistBinding>(R.layout.fragme
         },
         ActionBottomSheetDialogItem(R.drawable.ic_times_circle, R.string.movie_not_watched) {
             viewModel.changeWatchStatus(movieId, NOT_WATCHED)
+            dialog.dismiss()
+        }
+    )
+
+    private fun showSortAndFilterDialog() {
+        actionBottomSheetDialog {
+            title(R.string.watchlist_sort_and_filter)
+            items = sortAndFilterItems(this)
+        }.show()
+    }
+
+    private fun sortAndFilterItems(dialog: ActionBottomSheetDialog) = listOf(
+        ActionBottomSheetDialogItem(text = R.string.sort_watchlist_by_not_watched_movies) {
+            viewModel.sortWatchlist(NOT_WATCHED)
+            dialog.dismiss()
+        },
+        ActionBottomSheetDialogItem(text = R.string.sort_watchlist_by_watched_movies) {
+            viewModel.sortWatchlist(WATCHED)
             dialog.dismiss()
         }
     )

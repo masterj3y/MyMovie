@@ -57,9 +57,10 @@ class MovieRepository @Inject constructor(
         dao.removeFromWatchlist(movieId)
     }
 
-    suspend fun getWatchlist(): Flow<List<MovieDetails>> = withContext(IO) {
-        dao.findWatchlist()
-    }
+    suspend fun getWatchlist(sortByWatchlist: String): Flow<List<MovieDetails>> =
+        withContext(IO) {
+            dao.findWatchlist(sortByWatchlist)
+        }
 
     suspend fun changeWatchStatus(movieId: String, status: WatchlistStatusLabel) = withContext(IO) {
         dao.changeMovieWatchStatus(movieId, status.toString())
