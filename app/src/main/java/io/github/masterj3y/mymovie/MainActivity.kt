@@ -7,6 +7,7 @@ import com.ncapdevi.fragnav.FragNavSwitchController
 import com.ncapdevi.fragnav.FragNavTransactionOptions
 import com.ncapdevi.fragnav.tabhistory.UniqueTabHistoryStrategy
 import dagger.hilt.android.AndroidEntryPoint
+import io.github.masterj3y.mymovie.core.extension.hideSoftInput
 import io.github.masterj3y.mymovie.core.platform.BaseActivity
 import io.github.masterj3y.mymovie.core.platform.BaseFragment
 import io.github.masterj3y.mymovie.databinding.ActivityMainBinding
@@ -15,6 +16,7 @@ import io.github.masterj3y.mymovie.movie.watchlist.WatchlistFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import me.ibrahimsn.lib.OnItemReselectedListener
+
 
 @AndroidEntryPoint
 @InternalCoroutinesApi
@@ -57,6 +59,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), BaseFragment.FragmentN
             binding.mainBottomBar.itemActiveIndex = 0
         }
         binding.mainBottomBar.onItemSelected = {
+            hideSoftInput()
             when (it) {
                 0 -> fragNavController.switchTab(SEARCH_TAB)
                 1 -> fragNavController.switchTab(WATCHLIST_TAB)
