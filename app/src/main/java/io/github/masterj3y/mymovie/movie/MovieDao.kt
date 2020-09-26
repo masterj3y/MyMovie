@@ -28,6 +28,9 @@ interface MovieDao {
     @Query("SELECT * FROM movies WHERE inWatchlist = 1 ORDER BY watchStatus = :watchStatusSort DESC")
     fun findWatchlistSortByWatchStatus(watchStatusSort: String): Flow<List<MovieDetails>>
 
+    @Query("SELECT * FROM movies WHERE inWatchlist = 1 AND watchStatus = :watchStatusSort")
+    fun findWatchlistFilterByWatchStatus(watchStatusSort: String): Flow<List<MovieDetails>>
+
     @Query("UPDATE movies SET watchStatus = :status WHERE movieId = :movieId")
     fun changeMovieWatchStatus(movieId: String, status: String)
 }

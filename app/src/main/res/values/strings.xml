@@ -13,5 +13,7 @@
     <string name="watchlist_sort_and_filter">Sort and Filter</string>
     <string name="sort_watchlist_by_watched_movies">Sort by Watched movies</string>
     <string name="sort_watchlist_by_not_watched_movies">Sort by Not Watched movies</string>
+    <string name="filter_watchlist_by_watched_movies">Filter by Watched movies</string>
+    <string name="filter_watchlist_by_not_watched_movies">Filter by Not Watched movies</string>
     <string name="watchlist_normal">Normal</string>
 </resources>

@@ -84,6 +84,14 @@ class WatchlistFragment : BaseFragment<FragmentWatchlistBinding>(R.layout.fragme
         ActionBottomSheetDialogItem(text = R.string.sort_watchlist_by_watched_movies) {
             viewModel.findWatchlistSortByWatchStatus(WATCHED)
             dialog.dismiss()
+        },
+        ActionBottomSheetDialogItem(text = R.string.filter_watchlist_by_not_watched_movies) {
+            viewModel.findWatchlistFilterByWatchStatus(NOT_WATCHED)
+            dialog.dismiss()
+        },
+        ActionBottomSheetDialogItem(text = R.string.filter_watchlist_by_watched_movies) {
+            viewModel.findWatchlistFilterByWatchStatus(WATCHED)
+            dialog.dismiss()
         }
     )
 }
