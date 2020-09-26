@@ -1,10 +1,7 @@
 package io.github.masterj3y.mymovie.movie.watchlist
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.switchMap
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import io.github.masterj3y.mymovie.core.platform.BaseViewModel
 import io.github.masterj3y.mymovie.movie.MovieRepository
 import io.github.masterj3y.mymovie.movie.details.MovieDetails
@@ -18,10 +15,25 @@ import kotlinx.coroutines.launch
 class WatchlistViewModel @ViewModelInject constructor(private val repository: MovieRepository) :
     BaseViewModel() {
 
-    private val sortByWatchStatus = MutableLiveData(NOT_WATCHED)
-    val watchList: LiveData<List<MovieDetails>> = sortByWatchStatus.switchMap {
-        launchOnViewModelScope {
-            repository.getWatchlist(it.toString())
+    private var findWatchlist = MutableLiveData(true)
+    private val findWatchlistSortByWatchStatus = MutableLiveData(NOT_WATCHED)
+
+    private val unsortedWatchlist: LiveData<List<MovieDetails>>
+    private val sortedWatchlist: LiveData<List<MovieDetails>>
+    val watchlist = MediatorLiveData<List<MovieDetails>>()
+
+    init {
+        unsortedWatchlist = findWatchlist.switchMap {
+            launchOnViewModelScope { repository.getWatchlist() }
+        }
+        sortedWatchlist = findWatchlistSortByWatchStatus.switchMap {
+            launchOnViewModelScope { repository.getWatchlistSortByWatchStatus(it) }
+        }
+        watchlist.addSource(unsortedWatchlist) {
+            watchlist.value = unsortedWatchlist.value
+        }
+        watchlist.addSource(sortedWatchlist) {
+            watchlist.value = sortedWatchlist.value
         }
     }
 
@@ -37,7 +49,11 @@ class WatchlistViewModel @ViewModelInject constructor(private val repository: Mo
         }
     }
 
-    fun sortWatchlist(sortByWatchStatus: WatchlistStatusLabel) {
-        this.sortByWatchStatus.value = sortByWatchStatus
+    fun findWatchlist() {
+        this.findWatchlist.value = true
+    }
+
+    fun findWatchlistSortByWatchStatus(sortByWatchStatus: WatchlistStatusLabel) {
+        this.findWatchlistSortByWatchStatus.value = sortByWatchStatus
     }
 }

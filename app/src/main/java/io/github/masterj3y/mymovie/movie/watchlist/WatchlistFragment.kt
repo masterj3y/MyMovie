@@ -73,12 +73,16 @@ class WatchlistFragment : BaseFragment<FragmentWatchlistBinding>(R.layout.fragme
     }
 
     private fun sortAndFilterItems(dialog: ActionBottomSheetDialog) = listOf(
+        ActionBottomSheetDialogItem(text = R.string.watchlist_normal) {
+            viewModel.findWatchlist()
+            dialog.dismiss()
+        },
         ActionBottomSheetDialogItem(text = R.string.sort_watchlist_by_not_watched_movies) {
-            viewModel.sortWatchlist(NOT_WATCHED)
+            viewModel.findWatchlistSortByWatchStatus(NOT_WATCHED)
             dialog.dismiss()
         },
         ActionBottomSheetDialogItem(text = R.string.sort_watchlist_by_watched_movies) {
-            viewModel.sortWatchlist(WATCHED)
+            viewModel.findWatchlistSortByWatchStatus(WATCHED)
             dialog.dismiss()
         }
     )
