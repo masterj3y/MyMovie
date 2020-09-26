@@ -1,12 +1,15 @@
 package io.github.masterj3y.mymovie.movie.watchlist
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.viewModelScope
 import io.github.masterj3y.mymovie.core.platform.BaseViewModel
 import io.github.masterj3y.mymovie.movie.MovieRepository
 import io.github.masterj3y.mymovie.movie.details.MovieDetails
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
@@ -14,36 +17,13 @@ import kotlinx.coroutines.launch
 class WatchlistViewModel @ViewModelInject constructor(private val repository: MovieRepository) :
     BaseViewModel() {
 
-    private var findWatchlist = MutableLiveData(true)
-    private val findWatchlistSortByWatchStatus = MutableLiveData<WatchlistStatusLabel>()
-    private val findWatchlistFilterByWatchStatus = MutableLiveData<WatchlistStatusLabel>()
-
-    private val unsortedWatchlist: LiveData<List<MovieDetails>>
-    private val sortedWatchlist: LiveData<List<MovieDetails>>
-    private val filteredWatchlist: LiveData<List<MovieDetails>>
+    private var previousSource: LiveData<List<MovieDetails>>? = null
 
     val watchlist = MediatorLiveData<List<MovieDetails>>()
 
     init {
-        unsortedWatchlist = findWatchlist.switchMap {
-            launchOnViewModelScope { repository.getWatchlist() }
-        }
-        sortedWatchlist = findWatchlistSortByWatchStatus.switchMap {
-            launchOnViewModelScope { repository.getWatchlistSortByWatchStatus(it) }
-        }
-        filteredWatchlist = findWatchlistFilterByWatchStatus.switchMap {
-            launchOnViewModelScope { repository.getWatchlistFilterByWatchStatus(it) }
-        }
-
-        watchlist.addSource(unsortedWatchlist) {
-            watchlist.value = unsortedWatchlist.value
-        }
-        watchlist.addSource(sortedWatchlist) {
-            watchlist.value = sortedWatchlist.value
-        }
-        watchlist.addSource(filteredWatchlist) {
-            watchlist.value = filteredWatchlist.value
-        }
+        // Primitive Source
+        switchSource { repository.getWatchlist() }
     }
 
     fun removeFromWatchlist(movieId: String) {
@@ -58,15 +38,28 @@ class WatchlistViewModel @ViewModelInject constructor(private val repository: Mo
         }
     }
 
-    fun findWatchlist() {
-        this.findWatchlist.value = true
+    fun findWatchlist() = switchSource {
+        repository.getWatchlist()
     }
 
-    fun findWatchlistSortByWatchStatus(sortByWatchStatus: WatchlistStatusLabel) {
-        this.findWatchlistSortByWatchStatus.value = sortByWatchStatus
+    fun findWatchlistSortByWatchStatus(sortByWatchStatus: WatchlistStatusLabel) = switchSource {
+        repository.getWatchlistSortByWatchStatus(sortByWatchStatus)
     }
 
-    fun findWatchlistFilterByWatchStatus(filterByWatchStatus: WatchlistStatusLabel) {
-        this.findWatchlistFilterByWatchStatus.value = filterByWatchStatus
+    fun findWatchlistFilterByWatchStatus(filterByWatchStatus: WatchlistStatusLabel) = switchSource {
+        repository.getWatchlistFilterByWatchStatus(filterByWatchStatus)
+    }
+
+    private inline fun switchSource(crossinline block: suspend () -> Flow<List<MovieDetails>>) {
+        previousSource?.let {
+            watchlist.removeSource(it)
+        }
+
+        val source = launchOnViewModelScope { block() }
+        watchlist.addSource(source) {
+            watchlist.value = source.value
+        }
+
+        previousSource = source
     }
 }
