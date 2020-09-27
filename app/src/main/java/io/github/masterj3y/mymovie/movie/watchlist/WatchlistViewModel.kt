@@ -2,13 +2,16 @@ package io.github.masterj3y.mymovie.movie.watchlist
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import io.github.masterj3y.mymovie.core.platform.BaseViewModel
 import io.github.masterj3y.mymovie.movie.MovieRepository
 import io.github.masterj3y.mymovie.movie.details.MovieDetails
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -17,9 +20,14 @@ import kotlinx.coroutines.launch
 class WatchlistViewModel @ViewModelInject constructor(private val repository: MovieRepository) :
     BaseViewModel() {
 
-    private var previousSource: LiveData<List<MovieDetails>>? = null
+    private val channel = Channel<Boolean>()
 
-    val watchlist = MediatorLiveData<List<MovieDetails>>()
+    private var _watchlist: LiveData<List<MovieDetails>> = MutableLiveData()
+    val watchlist: LiveData<List<MovieDetails>> = liveData {
+        channel.consumeEach {
+            emitSource(_watchlist)
+        }
+    }
 
     init {
         // Primitive Source
@@ -50,16 +58,11 @@ class WatchlistViewModel @ViewModelInject constructor(private val repository: Mo
         repository.getWatchlistFilterByWatchStatus(filterByWatchStatus)
     }
 
-    private inline fun switchSource(crossinline block: suspend () -> Flow<List<MovieDetails>>) {
-        previousSource?.let {
-            watchlist.removeSource(it)
+    private inline fun switchSource(crossinline block: suspend () -> Flow<List<MovieDetails>>) =
+        viewModelScope.launch {
+            _watchlist = launchOnViewModelScope(block)
+            reloadWatchlistSource()
         }
 
-        val source = launchOnViewModelScope { block() }
-        watchlist.addSource(source) {
-            watchlist.value = source.value
-        }
-
-        previousSource = source
-    }
+    private suspend fun reloadWatchlistSource() = channel.send(true)
 }
