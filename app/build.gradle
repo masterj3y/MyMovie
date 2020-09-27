@@ -131,6 +131,9 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"
 
+    def leakCanary = '2.4'
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanary"
+
     testImplementation 'junit:junit:4.13'
     testImplementation 'androidx.test:core:1.2.0'
     testImplementation 'org.robolectric:robolectric:4.3.1'
