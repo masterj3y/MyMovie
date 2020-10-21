@@ -1,1 +1,1 @@
-<img src="/previews/mockup.jpeg" align="right" width="32%"/>
+<img src="/previews/Mockup.jpeg" align="right" width="32%"/>
